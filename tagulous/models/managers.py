@@ -539,8 +539,11 @@ class TagRelatedManagerMixin(BaseTagRelatedManager):
         if not hasattr(self, '_tags'):
             try:
                 self._tags = list(self.all())
-            except:
+            except AttributeError:
                 self._tags = []
+
+        if self._tags is None:
+            self._tags = []
 
         return self._tags
 
