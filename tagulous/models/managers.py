@@ -243,11 +243,14 @@ class BaseTagRelatedManager(object):
     """
     @property
     def tags(self):
-        if not hasattr(self, '_tags'):
-            try:
-                self._tags = list(self.all())
-            except AttributeError:
-                self._tags = []
+        try:
+            if not self._tags:
+                try:
+                    self._tags = list(self.all())
+                except AttributeError:
+                    self._tags = []
+        except AttributeError:
+            self._tags = []
 
         return self._tags
 
