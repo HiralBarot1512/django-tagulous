@@ -241,6 +241,20 @@ class BaseTagRelatedManager(object):
 
     Provides methods to managed cached tags
     """
+    @property
+    def tags(self):
+        if not hasattr(self, '_tags'):
+            try:
+                self._tags = list(self.all())
+            except AttributeError:
+                self._tags = []
+
+        return self._tags
+
+    @tags.setter
+    def tags(self, value):
+        self._tags = value
+
     def init_tagulous(self, descriptor):
         """
         Called directly after the mixin is added to the instantiated manager
@@ -534,23 +548,6 @@ class TagRelatedManagerMixin(BaseTagRelatedManager):
     #
     # New set, add, remove and clear, to update tag counts
     #
-    @property
-    def tags(self):
-        if not hasattr(self, '_tags'):
-            try:
-                self._tags = list(self.all())
-            except AttributeError:
-                self._tags = []
-
-        if self._tags is None:
-            self._tags = []
-
-        return self._tags
-
-    @tags.setter
-    def tags(self, value):
-        self._tags = value
-
     def set(self, *objs):
         self.clear()
         self.add(*objs)
