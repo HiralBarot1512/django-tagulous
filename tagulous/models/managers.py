@@ -252,7 +252,6 @@ class BaseTagRelatedManager(object):
         # If internal tags are None, haven't been loaded yet
         self.changed = False
         self.tags = None
-        self.reload()
 
     def __str__(self):
         """
@@ -535,6 +534,20 @@ class TagRelatedManagerMixin(BaseTagRelatedManager):
     #
     # New set, add, remove and clear, to update tag counts
     #
+    @property
+    def tags(self):
+        if not hasattr(self, '_tags'):
+            try:
+                self._tags = list(self.all())
+            except:
+                self._tags = []
+
+        return self._tags
+
+    @tags.setter
+    def tags(self, value):
+        self._tags = value
+
     def set(self, *objs):
         self.clear()
         self.add(*objs)
