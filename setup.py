@@ -3,7 +3,7 @@ import re
 import sys
 from setuptools import setup, find_packages
 
-VERSION = "0.14.2"
+VERSION = "0.14.3"
 
 
 def read(fname):
