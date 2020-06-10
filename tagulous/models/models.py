@@ -6,7 +6,7 @@ from __future__ import unicode_literals
 import django
 from django.db import connection, models, router, transaction, IntegrityError
 import six
-from django.utils.encoding import python_2_unicode_compatible
+from six import python_2_unicode_compatible
 try:
     from django.utils.text import slugify
 except ImportError:
